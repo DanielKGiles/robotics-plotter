@@ -30,7 +30,9 @@ def DetectFace(image_path):
         roi_color = image[(y-zoom):y + h + zoom, (x-zoom):x + w +zoom]
         print("[INFO] Object found. Saving locally.")
         # cv2.imwrite(str(w) + str(h) + '_faces.jpg', roi_color)
-        cv2.imwrite("cropped_image.png", roi_color)
+
+        if num_faces == 1:
+            cv2.imwrite("cropped_image.png", roi_color)
 
     # status = cv2.imwrite('output.png', image)
     # print("[INFO] Image output.png written to filesystem: ", status)
