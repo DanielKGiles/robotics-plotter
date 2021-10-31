@@ -3,7 +3,7 @@ import os
 import pickle
 
 def send_lines_and_begin_drawing(lines):
-    # os.system('ssh pi@{}')
+
    with open('lines.pkl', 'wb') as f:
       pickle.dump(lines, f)
 
@@ -24,24 +24,17 @@ def send_lines_and_begin_drawing(lines):
    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # This tells the package to automatically trust the ip address you tell it to connect to.
    ssh.connect(host, port, username, password) # Connect to the Raspberry Pi
 
-   # command0 = 'ls'
-   # stdin, stdout, stderr = ssh.exec_command(command0) # Run the above command on the Raspberry Pi
-   # output = stdout.readlines() # Get the output from the Raspberry Pi's command line and print the result in the current terminal
-   # print(output)
-
    sftp_client=ssh.open_sftp() # SFTP clients allow us to perform secure file tranfer
    sftp_client.put('lines.pkl','/home/pi/Documents/BrachioGraph/lines.pkl') # NOTE: Need to add this folder to the Raspberry Pi
    sftp_client.close()
 
-   command1 = "cd /home/pi/Documents/BrachioGraph/"
-   command2 = "python DrawImage.py" # When run, this command will run the DrawImage.py file on the Raspberry Pi
+   # xhost + && export DISPLAY='10.27.148.134:0.0' && 
 
-   stdin, stdout, stderr = ssh.exec_command(command1) # Run the above command on the Raspberry Pi
-   output = stdout.readlines() # Get the output from the Raspberry Pi's command line and print the result in the current terminal
-   print(output)
+   stdin, stdout, stderr = ssh.exec_command("sudo killall pigpiod && cd /home/pi/Documents/BrachioGraph/ && source /home/pi/miniconda3/bin/activate robotics3_env && python -V && sudo pigpiod && python -m DrawImage.py", get_pty=True)
+   for line in iter(stdout.readline, ""):
+      print(line, end="")
+   print('finished.')
 
-   stdin, stdout, stderr = ssh.exec_command(command2) # Run the above command on the Raspberry Pi
-   output = stdout.readlines() # Get the output from the Raspberry Pi's command line and print the result in the current terminal
-   print(output)
+
 
 

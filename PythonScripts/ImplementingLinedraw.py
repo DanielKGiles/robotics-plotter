@@ -5,6 +5,7 @@ sys.path.append('../PythonScripts/')
 import plotter
 import pickle
 import SendDataToPi
+import VisualizeLines
 
 def SketchAndVisualize(image_path):
     lines = linedraw.sketch(image_path)
