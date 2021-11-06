@@ -8,6 +8,12 @@ import time
 import sys
 sys.path.append('../PythonScripts/')
 import FaceDetection
+
+import os
+cwd = os.getcwd()
+print("APP CURRENT WORKING DIRECTORY")
+print(cwd)
+
 import ImplementingLinedraw
 
 class App:
@@ -31,7 +37,7 @@ class App:
         self.label.pack(anchor=tkinter.CENTER, expand=True, pady=10)
         self.label.config(font=("Courier", 16))
 
-         # Button that lets the user take a snapshot
+        # Button that lets the user take a snapshot
         self.btn_snapshot=tkinter.Button(window, text="Snapshot", width=50, command=self.snapshot)
         self.btn_snapshot.pack(anchor=tkinter.CENTER, expand=True, pady=0)
         

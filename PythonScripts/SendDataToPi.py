@@ -2,12 +2,12 @@ import paramiko
 import os
 import pickle
 
-def send_lines_and_begin_drawing(lines):
+def send_angles_and_begin_drawing(angles):
 
-   with open('lines.pkl', 'wb') as f:
-      pickle.dump(lines, f)
+   with open('angles.pkl', 'wb') as f:
+      pickle.dump(angles, f)
 
-   if (os.path.exists('lines.pkl')):
+   if (os.path.exists('angles.pkl')):
       print("FILE EXISTS")
    else:
          print("FILE DOES NOT EXIST")
@@ -25,12 +25,13 @@ def send_lines_and_begin_drawing(lines):
    ssh.connect(host, port, username, password) # Connect to the Raspberry Pi
 
    sftp_client=ssh.open_sftp() # SFTP clients allow us to perform secure file tranfer
-   sftp_client.put('lines.pkl','/home/pi/Documents/BrachioGraph/lines.pkl') # NOTE: Need to add this folder to the Raspberry Pi
+   sftp_client.put('angles.pkl','/home/pi/Documents/FinalProject/angles.pkl') # NOTE: Need to add this folder to the Raspberry Pi
    sftp_client.close()
 
    # xhost + && export DISPLAY='10.27.148.134:0.0' && 
 
-   stdin, stdout, stderr = ssh.exec_command("sudo killall pigpiod && cd /home/pi/Documents/BrachioGraph/ && source /home/pi/miniconda3/bin/activate robotics3_env && python -V && sudo pigpiod && python -m DrawImage.py", get_pty=True)
+   ssh.exec_command("sudo killall pigpiod")
+   stdin, stdout, stderr = ssh.exec_command("cd /home/pi/Documents/FinalProject/ && source /home/pi/miniconda3/bin/activate robotics3_env && python -V && sudo pigpiod && python -m DrawImage.py", get_pty=True)
    for line in iter(stdout.readline, ""):
       print(line, end="")
    print('finished.')
