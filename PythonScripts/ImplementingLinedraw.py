@@ -1,10 +1,10 @@
 import cv2
 import linedraw
 
-import os
-cwd = os.getcwd()
-print("IMPLEMENTING LINEDRAW CURRENT WORKING DIRECTORY")
-print(cwd)
+# import os
+# cwd = os.getcwd()
+# print("IMPLEMENTING LINEDRAW CURRENT WORKING DIRECTORY")
+# print(cwd)
 
 from math import *
 import sys
@@ -40,9 +40,6 @@ def xy_to_angles(x,y, motor_1_pos=-1.5, motor_2_pos=1.5, driver=3.34, follower=4
     theta_1 = 180 - theta_5 - theta_3
     theta_2 = 180 - theta_4 - theta_6
 
-    # print("THETA 1: " + str(theta_1))
-    # print("THETA 2: " + str(theta_2))
-
     # The motors are positioned forward, with zero being the forward position, 
     # 90 being rotated anti-clockwise 90 degrees, and -90 being rotated 
     # clockwise by 90 degrees
@@ -54,18 +51,9 @@ def xy_to_angles(x,y, motor_1_pos=-1.5, motor_2_pos=1.5, driver=3.34, follower=4
 
 def SketchAndVisualize(image_path):
     import os
-    # cwd = os.getcwd()
-    # print("SKETCHANDVISUALIZE CURRENT WORKING DIRECTORY")
-    # print(cwd)
-    # sys.path.append('../gui/output/out.svg')
     lines = linedraw.sketch(image_path)
 
-    # determine_bounds()
-
-    # lines = linedraw.sketch(r'C:\Users\danie\Documents\Academics\CurrentClasses\Fall 2021\Robotics\robotics_plotter_repo\robotics-plotter\linedraw\output\out.svg')
     lines = scale_image(lines)
-    print(lines[0])
-    # original_lines = lines # For testing purposes only.
 
     for i, line in enumerate(lines):
       for j, point in enumerate(line):
@@ -73,9 +61,6 @@ def SketchAndVisualize(image_path):
 
     # Rename to something more appropriate, now that we have angles instead of lines
     angles = lines
-
-    print(angles[0])
-    # print(original_lines[0])
 
     SendDataToPi.send_angles_and_begin_drawing(angles)
     

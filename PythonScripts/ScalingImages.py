@@ -16,10 +16,10 @@ def scale_image(lines, left_bound=-1.87, right_bound=1.87, bottom_bound=4.25, to
             current_max_y = point[1]
 
 
-   print("current_min_x = ",current_min_x)
-   print("current_max_x = ",current_max_x)
-   print("current_min_y = ",current_min_y)
-   print("current_max_y = ",current_max_y)
+   # print("current_min_x = ",current_min_x)
+   # print("current_max_x = ",current_max_x)
+   # print("current_min_y = ",current_min_y)
+   # print("current_max_y = ",current_max_y)
 
    current_x_range = current_max_x - current_min_x
    current_y_range = current_max_y - current_min_y

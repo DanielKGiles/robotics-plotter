@@ -1,4 +1,5 @@
 import tkinter
+from tkinter.filedialog import askopenfilename
 import cv2
 import PIL.Image
 import PIL.ImageTk
@@ -9,13 +10,13 @@ import sys
 sys.path.append('../PythonScripts/')
 import FaceDetection
 
-import os
-cwd = os.getcwd()
-print("APP CURRENT WORKING DIRECTORY")
-print(cwd)
+# import os
+# cwd = os.getcwd()
+# print("APP CURRENT WORKING DIRECTORY")
+# print(cwd)
 
 import ImplementingLinedraw
-from SendDataToPi import send_draw_rectangle, send_erase
+from SendDataToPi import send_draw_rectangle, send_draw_detailed_rectangle, send_erase
 class App:
     def __init__(self, window, window_title, video_source=0):
         self.window = window
@@ -41,9 +42,14 @@ class App:
         self.btn_snapshot=tkinter.Button(window, text="Snapshot", width=50, command=self.snapshot)
         self.btn_snapshot.pack(anchor=tkinter.CENTER, expand=True, pady=0)
 
-        # Button that lets the user plot the calibration rectangle
-        self.btn_calibration_rectangle=tkinter.Button(window, text="Draw a calibration rectangle", width=50, command=self.draw_rectangle)
+        # Button that lets the user plot the simple calibration rectangle
+        self.btn_calibration_rectangle=tkinter.Button(window, text="Draw a simple calibration rectangle", width=50, command=self.draw_rectangle)
         self.btn_calibration_rectangle.pack(anchor=tkinter.CENTER, expand=True, pady=0)
+
+        # Button that lets the user plot the detailed calibration rectangle
+        self.btn_detailed_calibration_rectangle=tkinter.Button(window, text="Draw a detailed calibration rectangle", width=50, command=self.draw_detailed_rectangle)
+        self.btn_detailed_calibration_rectangle.pack(anchor=tkinter.CENTER, expand=True, pady=0)
+
 
         # Button that lets the user send their own file
         self.btn_eraser=tkinter.Button(window, text="Choose file to draw", width=50, command=self.choose_file)
@@ -63,12 +69,20 @@ class App:
 
 
     def draw_rectangle(self):
-        self.label.config(text = "The robot will begin drawing a rectangle shortly...")
+        self.label.config(text = "The robot will begin drawing a simple rectangle shortly...")
         send_draw_rectangle()
         self.label.config(text = "Rectangle complete! Select another option to continue.")
 
+    def draw_detailed_rectangle(self):
+        self.label.config(text = "The robot will begin drawing a detailed rectangle shortly...")
+        send_draw_detailed_rectangle()
+        self.label.config(text = "Rectangle complete! Select another option to continue.")
+
+
     def choose_file(self):
-        ...
+        filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
+        print(filename)
+        ImplementingLinedraw.SketchAndVisualize(filename)
 
     def erase(self):
         send_erase()
