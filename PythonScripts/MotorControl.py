@@ -1,8 +1,9 @@
 import pickle
 import turtle
-from typing import _get_type_hints_obj_allowed_types
+# from typing import _get_type_hints_obj_allowed_types
 from gpiozero import AngularServo
 from gpiozero.pins.pigpio import PiGPIOFactory
+from time import sleep
 
 class MotorController:
 
@@ -18,6 +19,12 @@ class MotorController:
       self.right_servo.angle = 0
       self.up_down_servo.angle = -75
 
+   def go_to_angle(self, angle, motor):
+      if motor == "left":
+         self.left_servo.angle = angle
+      elif motor == "right":
+         self.right_servo.angle = angle
+
    def pen_up(self):
       self.up_down_servo.angle = -50
 
@@ -25,7 +32,7 @@ class MotorController:
       self.up_down_servo.angle = -75
 
    def angles_to_pwm(self, servo, angle):
-      servo.angle = 0
+      servo.angle = angle
 
    def plot_file(self, filename='angles.pkl'):
       pickle_file = open(filename,"rb")
@@ -41,17 +48,21 @@ class MotorController:
 
       self.plot_angles(angles)
 
-   def plot_angles(self, angles):
+   def plot_angles(self, angles, wait=1.31):
       for i, line in enumerate(angles):
 
          # Lift up pen, go to the beginning of each line, then put the pen down
          self.pen_up()
-         self.angles_to_pwm(self.left_servo, line[i][0])
-         self.angles_to_pwm(self.right_servo, line[i][1])
+         self.angles_to_pwm(self.left_servo, angles[i][0][0])
+         self.angles_to_pwm(self.right_servo, angles[i][0][1])
          self.pen_down()
+         sleep(wait) # Time for the motors to reach their new positions
 
          for j, angle in enumerate(line):
+            
             self.angles_to_pwm(self.left_servo, angle[0])
             self.angles_to_pwm(self.right_servo, angle[1])
+            sleep(wait) # Time for the motors to reach their new positions
+      
 
       

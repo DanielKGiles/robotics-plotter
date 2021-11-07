@@ -1,4 +1,5 @@
-def scale_image(lines, left_bound=-3.5, right_bound=3.5, bottom_bound=2, top_bound=5.5):
+# def scale_image(lines, left_bound=-3.5, right_bound=3.5, bottom_bound=2, top_bound=5.5):
+def scale_image(lines, left_bound=-1.87, right_bound=1.87, bottom_bound=4.25, top_bound=7.05):
    current_min_x = 10000
    current_min_y = 10000
    current_max_x = -10000

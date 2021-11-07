@@ -148,25 +148,27 @@ def determine_bounds(driver=3.34, follower=4.82, lines=None):
 
    plt.plot(acceptable_x, acceptable_y)
 
-   x_min_less_than_6 = 10
-   x_max_less_than_6 = 0
+   x_min_less_than_73 = 10
+   x_max_less_than_73 = 0
    for i in range(len(acceptable_points)):
-      if ((acceptable_points[i][1] > 6) and (acceptable_points[i][0] < x_min_less_than_6)):
-         x_min_less_than_6 = acceptable_points[i][0]
-      if ((acceptable_points[i][1] > 6) and (acceptable_points[i][0] > x_max_less_than_6)):
-         x_max_less_than_6 = acceptable_points[i][0]
+      if ((acceptable_points[i][1] > 7.3) and (acceptable_points[i][0] < x_min_less_than_73)):
+         x_min_less_than_73 = acceptable_points[i][0]
+      if ((acceptable_points[i][1] > 7.3) and (acceptable_points[i][0] > x_max_less_than_73)):
+         x_max_less_than_73 = acceptable_points[i][0]
    # print("x_min_less_than_6", x_min_less_than_6)
    # print("x_max_less_than_6", x_max_less_than_6)
-   x_range = [x_min_less_than_6, x_min_less_than_6, x_max_less_than_6, x_max_less_than_6, x_min_less_than_6]
-   y_range = [1.5,6,6,1.5, 1.5]
+   x_range = [x_min_less_than_73, x_min_less_than_73, x_max_less_than_73, x_max_less_than_73, x_min_less_than_73]
+   y_range = [4,7.3,7.3,4, 4]
    plt.plot(x_range,y_range, color='red')
 
-   new_x_range = [x_min_less_than_6 + 0.5, x_min_less_than_6 + 0.5, x_max_less_than_6 - 0.5, x_max_less_than_6 - 0.5, x_min_less_than_6 + 0.5]
-   new_y_range = [2,5.5,5.5,2,2]
+   offset = 0.25
+
+   new_x_range = [x_min_less_than_73 + offset, x_min_less_than_73 + offset, x_max_less_than_73 - offset, x_max_less_than_73 - offset, x_min_less_than_73 + offset]
+   new_y_range = [y_range[0] + offset, y_range[1] - offset, y_range[1] - offset, y_range[0] + offset, y_range[0] + offset]
    plt.plot(new_x_range,new_y_range, color='lime')
 
-   x_bounds = [x_min_less_than_6 + 0.5, x_max_less_than_6 - 0.5]
-   y_bounds = [2,5.5]
+   x_bounds = [x_min_less_than_73 + offset, x_max_less_than_73 - offset]
+   y_bounds = [y_range[0] + offset, y_range[1] - offset]
 
    print("X-bounds --> Left: " + str(x_bounds[0]) + ", Right: " + str(x_bounds[1]))
    print("Y-bounds --> Bottom: " + str(y_bounds[0]) + ", Top: " + str(y_bounds[1]))

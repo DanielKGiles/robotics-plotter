@@ -31,7 +31,7 @@ def send_angles_and_begin_drawing(angles):
    # xhost + && export DISPLAY='10.27.148.134:0.0' && 
 
    ssh.exec_command("sudo killall pigpiod")
-   stdin, stdout, stderr = ssh.exec_command("cd /home/pi/Documents/FinalProject/ && source /home/pi/miniconda3/bin/activate robotics3_env && python -V && sudo pigpiod && python -m DrawImage.py", get_pty=True)
+   stdin, stdout, stderr = ssh.exec_command("cd /home/pi/Documents/FinalProject/ && source /home/pi/miniconda3/bin/activate robotics3_env && python -V && sudo pigpiod && python -m DrawImage", get_pty=True)
    for line in iter(stdout.readline, ""):
       print(line, end="")
    print('finished.')
