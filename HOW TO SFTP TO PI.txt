@@ -1,0 +1,17 @@
+Run the following command:
+
+sftp pi@10.27.148.134
+
+When it asks for password, type:
+
+robotics
+
+Then cd into the correct directory:
+
+cd /home/pi/Documents/FinalProject
+
+If you want to copy and paste them to run all at once:
+
+sftp pi@10.27.148.134
+robotics
+cd /home/pi/Documents/FinalProject

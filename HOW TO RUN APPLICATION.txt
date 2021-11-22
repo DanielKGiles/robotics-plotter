@@ -1,0 +1,3 @@
+conda activate robotics_env
+cd C:\Users\danie\Documents\Academics\CurrentClasses\Fall2021\Robotics\robotics_plotter_repo\robotics-plotter\PythonScripts
+python ../gui/tkinter_app.py

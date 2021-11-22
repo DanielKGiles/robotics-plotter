@@ -14,6 +14,11 @@ import pickle
 import SendDataToPi
 import VisualizeLines
 from ScalingImages import scale_image
+
+# The following two packages are needed for converting SVG to PNG
+from PySide2.QtSvg import *
+from PySide2.QtGui import *
+
 # from DetermineBoundsRevised import determine_bounds
 
 
@@ -51,7 +56,12 @@ def xy_to_angles(x,y, motor_1_pos=-1.5, motor_2_pos=1.5, driver=3.34, follower=4
 
 def SketchAndVisualize(image_path):
     import os
+    path = os.path.abspath(linedraw.__file__)
+    # print("PATH:")
+    # print(path)
     lines = linedraw.sketch(image_path)
+    SVG_to_image(input_folder="../gui/output/")
+    
 
     lines = scale_image(lines)
 
@@ -66,3 +76,19 @@ def SketchAndVisualize(image_path):
     
     
     print("DONE!")
+
+
+def SVG_to_image(input_folder="../gui/output/"):
+
+  svgFilepath = input_folder + "out.svg"
+  pngFilepath = input_folder + "out.png"
+  resolution = 2560
+
+  # Perform conversion
+  r=QSvgRenderer(svgFilepath)
+  height=r.defaultSize().height()*resolution/r.defaultSize().width()
+  i=QImage(resolution,height,QImage.Format_ARGB32)
+  p=QPainter(i)
+  r.render(p)
+  i.save(pngFilepath)
+  p.end()
